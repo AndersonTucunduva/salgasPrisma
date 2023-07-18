@@ -1,0 +1,1133 @@
+generator client {
+  provider = "mysql"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model address {
+  id              Int     @id @default(autoincrement())
+  reference_type  Int?
+  reference_id    Int?
+  type            Int?
+  state_id        Int?
+  city_id         Int?
+  street_name     String? @db.VarChar(100)
+  street_number   String? @db.VarChar(50)
+  zipcode         String? @db.VarChar(10)
+  neighborhood_id Int?
+  complement      String? @db.VarChar(1000)
+  coordinates     String? @db.VarChar(100)
+  taxes           Int?
+  notes           String? @db.VarChar(100)
+  active          Int?    @db.TinyInt
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model app_config {
+  monthly_key          String? @db.VarChar(32)
+  integrity            String? @db.VarChar(30)
+  database_version     String? @db.VarChar(100)
+  sale_sequence1       Int?
+  sale_sequence2       Int?
+  sale_sequence3       Int?
+  sale_sequence4       Int?
+  sale_sequence5       Int?
+  sale_sequence6       Int?
+  sale_sequence7       Int?
+  sale_sequence8       Int?
+  sale_sequence9       Int?
+  sale_sequence10      Int?
+  sale_item_sequence1  Int?
+  sale_item_sequence2  Int?
+  sale_item_sequence3  Int?
+  sale_item_sequence4  Int?
+  sale_item_sequence5  Int?
+  sale_item_sequence6  Int?
+  sale_item_sequence7  Int?
+  sale_item_sequence8  Int?
+  sale_item_sequence9  Int?
+  sale_item_sequence10 Int?
+  fiscal1              Int?
+  fiscal2              Int?
+  fiscal3              Int?
+  fiscal4              Int?
+  fiscal5              Int?
+  fiscal6              Int?
+  fiscal7              Int?
+  fiscal8              Int?
+  fiscal9              Int?
+  fiscal10             Int?
+
+  @@ignore
+}
+
+model app_log {
+  id               Int       @id
+  date             DateTime? @db.Date
+  time             DateTime? @db.Time(0)
+  station_id       Int?
+  user_id          Int?
+  module           Int?
+  crud_action      Int?
+  element_id       Int?
+  backup_web_check Int?      @db.TinyInt
+  aux2             Int?
+  aux3             Int?
+  aux4             Int?
+  aux5             Int?
+  notes            String?   @db.VarChar(100)
+}
+
+model app_user {
+  id                  Int     @id
+  name                String? @db.VarChar(100)
+  password            String? @db.VarChar(32)
+  permissions01       String? @db.Char(5)
+  permissions02       String? @db.Char(5)
+  permissions03       String? @db.Char(5)
+  permissions04       String? @db.Char(5)
+  permissions05       String? @db.Char(5)
+  permissions06       String? @db.Char(5)
+  permissions07       String? @db.Char(5)
+  permissions08       String? @db.Char(5)
+  permissions09       String? @db.Char(5)
+  permissions10       String? @db.Char(5)
+  permissions11       String? @db.Char(5)
+  permissions12       String? @db.Char(5)
+  permissions13       String? @db.Char(5)
+  permissions14       String? @db.Char(5)
+  permissions15       String? @db.Char(5)
+  permissions16       String? @db.Char(5)
+  permissions17       String? @db.Char(5)
+  permissions18       String? @db.Char(5)
+  permissions19       String? @db.Char(5)
+  permissions20       String? @db.Char(5)
+  permissions21       String? @db.Char(5)
+  permissions22       String? @db.Char(5)
+  permissions23       String? @db.Char(5)
+  permissions24       String? @db.Char(5)
+  permissions25       String? @db.Char(5)
+  permissions26       String? @db.Char(5)
+  permissions27       String? @db.Char(5)
+  permissions28       String? @db.Char(5)
+  permissions29       String? @db.Char(5)
+  permissions30       String? @db.Char(5)
+  permissions31       String? @db.Char(5)
+  permissions32       String? @db.Char(5)
+  permissions33       String? @db.Char(5)
+  permissions34       String? @db.Char(5)
+  permissions35       String? @db.Char(5)
+  permissions36       String? @db.Char(5)
+  permissions37       String? @db.Char(5)
+  permissions38       String? @db.Char(5)
+  permissions39       String? @db.Char(5)
+  permissions40       String? @db.Char(5)
+  permissions_general String? @db.Char(20)
+  active              Int?    @db.TinyInt
+}
+
+model bank {
+  id              Int     @id
+  name            String? @db.VarChar(100)
+  type            Int?
+  bank_number     String? @db.VarChar(20)
+  account_number  String? @db.VarChar(20)
+  balance         Int?
+  minimum_balance Int?
+  active          Int?    @db.TinyInt
+}
+
+model brand {
+  id     Int     @id
+  name   String? @db.VarChar(100)
+  active Int?    @db.TinyInt
+}
+
+model card {
+  id               Int       @id
+  in_use           Int?      @db.TinyInt
+  sale_id          Int?
+  production_print Int?      @db.TinyInt
+  delivered        Int?      @db.TinyInt
+  opening_time     DateTime? @db.Time(0)
+  last_item_time   DateTime? @db.Time(0)
+  has_items        Int?      @db.TinyInt
+  hall_table_id    Int?
+}
+
+model cargo {
+  id             Int       @id
+  opening_date   DateTime? @db.Date
+  opening_time   DateTime? @db.Time(0)
+  departure_date DateTime? @db.Date
+  departure_time DateTime? @db.Time(0)
+  app_user_id    Int?
+  vehicle_id     Int?
+  loading        Int?      @db.TinyInt
+  notes          String?   @db.VarChar(100)
+}
+
+model cargo_item {
+  id           Int       @id
+  cargo_id     Int?
+  date         DateTime? @db.Date
+  time         DateTime? @db.Time(0)
+  client_id    Int?
+  product_id   Int?
+  amount       Int?
+  notes        String?   @db.VarChar(100)
+  sale_id      Int?
+  sale_item_id Int?
+}
+
+model category {
+  id                   Int     @id
+  name                 String? @db.VarChar(100)
+  description          String? @db.VarChar(200)
+  type                 Int?
+  sub_type             Int?    @db.TinyInt
+  panel                Int?    @db.TinyInt
+  panel_name           String? @db.VarChar(100)
+  panel_position       Int?
+  panel_order_elements Int?
+  web                  Int?    @db.TinyInt
+  parameters           String? @db.VarChar(100)
+  active               Int?    @db.TinyInt
+}
+
+model city {
+  id                 Int     @id
+  name               String? @db.VarChar(100)
+  code               String? @db.VarChar(50)
+  state_id           Int?
+  referenced_city_id Int?
+  active             Int?    @db.TinyInt
+}
+
+model client {
+  id                      Int       @id
+  name                    String?   @db.VarChar(100)
+  doc_name                String?   @db.VarChar(100)
+  owner_name              String?   @db.VarChar(100)
+  type1                   Int?      @db.TinyInt
+  type2                   Int?      @db.TinyInt
+  gender                  Int?      @db.TinyInt
+  birthday                DateTime? @db.Date
+  occupation              String?   @db.VarChar(100)
+  phone                   String?   @db.VarChar(20)
+  cell_phone              String?   @db.VarChar(20)
+  phone2                  String?   @db.VarChar(20)
+  cell_phone2             String?   @db.VarChar(20)
+  email                   String?   @db.VarChar(100)
+  send_notifications      Int?      @db.TinyInt
+  state_id                Int?
+  city_id                 Int?
+  street_name             String?   @db.VarChar(100)
+  street_number           String?   @db.VarChar(50)
+  zipcode                 String?   @db.VarChar(10)
+  neighborhood_id         Int?
+  complement              String?   @db.VarChar(1000)
+  id_doc_number           String?   @db.VarChar(15)
+  id_doc_number2          String?   @db.VarChar(15)
+  id_doc_number3          String?   @db.VarChar(30)
+  id_doc_number4          String?   @db.VarChar(30)
+  id_doc_number5          String?   @db.VarChar(30)
+  company_id              Int?
+  notes                   String?   @db.VarChar(1000)
+  locked                  Int?      @db.TinyInt
+  coordinates             String?   @db.VarChar(100)
+  expiration_day          Int?
+  expiration_month_offset Int?
+  client_credit_limit     Int?
+  company_credit_limit    Int?
+  value1                  Int?
+  value2                  Int?
+  value3                  Int?
+  value4                  Int?
+  register                DateTime? @db.Date
+  payments                String?   @db.VarChar(100)
+  employee_id             Int?
+  active                  Int?      @db.TinyInt
+}
+
+model client_credit {
+  id        Int       @id
+  date      DateTime? @db.Date
+  time      DateTime? @db.Time(0)
+  client_id Int?
+  score     Int?
+  score2    Int?
+  sale_id   Int?
+  notes     String?   @db.VarChar(100)
+  active    Int?      @db.TinyInt
+}
+
+model client_occurrence {
+  id            Int       @id
+  date          DateTime? @db.Date
+  time          DateTime? @db.Time(0)
+  sub_client_id Int?
+  client_id     Int?
+  sale_id       Int?
+  notes         String?   @db.VarChar(3000)
+  active        Int?      @db.TinyInt
+}
+
+model client_reserve {
+  id             Int       @id
+  opening_date   DateTime? @db.Date
+  opening_time   DateTime? @db.Time(0)
+  reserve_date   DateTime? @db.Date
+  reserve_time   DateTime? @db.Time(0)
+  client_id      Int?
+  representative String?   @db.VarChar(100)
+  num_people     Int?
+  notes          String?   @db.VarChar(1000)
+  active         Int?      @db.TinyInt
+}
+
+model company {
+  id                      Int     @id
+  name                    String? @db.VarChar(100)
+  value                   Int?
+  expiration_day          Int?
+  expiration_month_offset Int?
+  company_credit_limit    Int?
+  client_credit_limit     Int?
+  active                  Int?    @db.TinyInt
+}
+
+model credit_card {
+  id             Int     @id
+  name           String? @db.VarChar(100)
+  type           Int?
+  bank_id        Int?
+  expense_id     Int?
+  tax            Int?
+  expiration_day Int?
+  active         Int?    @db.TinyInt
+}
+
+model department {
+  id     Int     @id
+  name   String? @db.VarChar(100)
+  active Int?    @db.TinyInt
+}
+
+model edit_rule {
+  id              Int       @id @default(autoincrement())
+  reference_type  Int?
+  reference_id    Int?
+  period_type     Int?
+  period_interval Int?
+  day             Int?
+  time1           DateTime? @db.Time(0)
+  time2           DateTime? @db.Time(0)
+  date1           DateTime? @db.Date
+  date2           DateTime? @db.Date
+  notes           String?   @db.VarChar(1000)
+  value           Int?
+  active          Int?      @db.TinyInt
+}
+
+model employee {
+  id              Int       @id
+  name            String?   @db.VarChar(100)
+  short_name      String?   @db.VarChar(100)
+  gender          Int?      @db.TinyInt
+  role            String?   @db.VarChar(100)
+  birthday        DateTime? @db.Date
+  phone           String?   @db.VarChar(20)
+  cell_phone      String?   @db.VarChar(20)
+  state_id        Int?
+  city_id         Int?
+  street_name     String?   @db.VarChar(100)
+  street_number   String?   @db.VarChar(50)
+  zipcode         String?   @db.VarChar(10)
+  neighborhood_id Int?
+  id_doc_number   String?   @db.VarChar(15)
+  id_doc_number2  String?   @db.VarChar(15)
+  salary          Int?
+  admission       DateTime? @db.Date
+  department_id   Int?
+  active          Int?      @db.TinyInt
+}
+
+model equipment {
+  id               Int     @id
+  name             String? @db.VarChar(100)
+  description      String? @db.VarChar(200)
+  internal_code    String? @db.VarChar(20)
+  barcode          String? @db.VarChar(20)
+  department_id    Int?
+  type             Int?    @db.TinyInt
+  brand_id         Int?
+  category_id      Int?
+  measure_unit     String? @db.VarChar(10)
+  minimum_stock    Int?
+  current_stock    Int?
+  production_print Int?    @db.TinyInt
+  printer_id       Int?
+  state            Int?    @db.TinyInt
+  active           Int?    @db.TinyInt
+}
+
+model equipment_item {
+  id                Int       @id
+  equipment_id      Int?
+  type              Int?      @db.TinyInt
+  item_equipment_id Int?
+  amount            Int?
+  value             Int?
+  update_date       DateTime? @db.Date
+  update_time       DateTime? @db.Time(0)
+  expiration_date   DateTime? @db.Date
+  expiration_time   DateTime? @db.Time(0)
+  notes             String?   @db.VarChar(100)
+  include           Int?      @db.TinyInt
+}
+
+model expense {
+  id                  Int     @id
+  name                String? @db.VarChar(100)
+  expense_category_id Int?
+  type1               Int?    @db.TinyInt
+  type2               Int?    @db.TinyInt
+  active              Int?    @db.TinyInt
+}
+
+model expense_category {
+  id     Int     @id
+  name   String? @db.VarChar(100)
+  type1  Int?    @db.TinyInt
+  type2  Int?    @db.TinyInt
+  active Int?    @db.TinyInt
+}
+
+model finance {
+  id              Int       @id
+  opening_date    DateTime? @db.Date
+  opening_time    DateTime? @db.Time(0)
+  payment_date    DateTime? @db.Date
+  payment_time    DateTime? @db.Time(0)
+  expiration_date DateTime? @db.Date
+  expiration_time DateTime? @db.Time(0)
+  type            Int?      @db.TinyInt
+  payment_method  Int?      @db.TinyInt
+  credit_card_id  Int?
+  bank_id         Int?
+  expense_id      Int?
+  employee_id     Int?
+  company_id      Int?
+  client_id       Int?
+  supplier_id     Int?
+  department_id   Int?
+  sale_id         Int?
+  purchase_id     Int?
+  session_id      Int?
+  finance_id      Int?
+  divisions       Int?
+  division_id     Int?
+  notes           String?   @db.VarChar(100)
+  sub_value       Int?
+  addition        Int?
+  discount        Int?
+  value           Int?
+  change_for      Int?
+  payed           Int?      @db.TinyInt
+}
+
+model fiscal {
+  id           Int       @id @default(autoincrement())
+  emit_date    DateTime? @db.Date
+  emit_time    DateTime? @db.Time(0)
+  type1        Int?      @db.TinyInt
+  type2        Int?      @db.TinyInt
+  type3        Int?      @db.TinyInt
+  type4        Int?      @db.TinyInt
+  type5        Int?      @db.TinyInt
+  type_code1   String?   @db.VarChar(100)
+  type_code2   String?   @db.VarChar(100)
+  type_code3   String?   @db.VarChar(100)
+  type_code4   String?   @db.VarChar(100)
+  type_code5   String?   @db.VarChar(100)
+  type_counter Int?
+  element_id   Int?
+  notes        String?   @db.VarChar(100)
+  destination  String?   @db.VarChar(100)
+  value        Int?
+  status       Int?      @db.TinyInt
+  file_text    String?   @db.Text
+}
+
+model hall_table {
+  id               Int       @id
+  in_use           Int?      @db.TinyInt
+  sale_id          Int?
+  production_print Int?      @db.TinyInt
+  delivered        Int?      @db.TinyInt
+  opening_time     DateTime? @db.Time(0)
+  last_item_time   DateTime? @db.Time(0)
+  has_items        Int?      @db.TinyInt
+}
+
+model manufacture {
+  id     Int     @id
+  name   String? @db.VarChar(100)
+  amount Int?
+  active Int?    @db.TinyInt
+}
+
+model material {
+  id              Int     @id
+  name            String? @db.VarChar(100)
+  description     String? @db.VarChar(200)
+  internal_code   String? @db.VarChar(20)
+  barcode         String? @db.VarChar(20)
+  supplier_id     Int?
+  category_id     Int?
+  brand_id        Int?
+  purchase_amount Int?
+  warehouse       Int?    @db.TinyInt
+  measure_unit    String? @db.VarChar(10)
+  price           Int?
+  aux_price       Int?
+  minimum_price   Int?
+  maximum_price   Int?
+  cost            Int?
+  markup          Int?
+  minimum_stock   Int?
+  current_stock   Int?
+  tax1            Int?
+  tax2            Int?
+  tax3            Int?
+  tax4            Int?
+  tax5            Int?
+  tax6            Int?
+  active          Int?    @db.TinyInt
+}
+
+model material_item {
+  id                Int  @id
+  material_id       Int?
+  department_id     Int?
+  alocation_percent Int?
+}
+
+model message {
+  id              Int       @id
+  opening_date    DateTime? @db.Date
+  opening_time    DateTime? @db.Time(0)
+  deliver_date    DateTime? @db.Date
+  deliver_time    DateTime? @db.Time(0)
+  from_user_id    Int?
+  to_user_id      Int?
+  from_station_id Int?
+  to_station_id   Int?
+  message_text    String?   @db.VarChar(1000)
+  state           Int?      @db.TinyInt
+}
+
+model movimentation {
+  id            Int       @id
+  type          Int?      @db.TinyInt
+  reference_id  Int?
+  opening_date  DateTime? @db.Date
+  opening_time  DateTime? @db.Time(0)
+  date1         DateTime? @db.Date
+  time1         DateTime? @db.Time(0)
+  date2         DateTime? @db.Date
+  time2         DateTime? @db.Time(0)
+  finish_date   DateTime? @db.Date
+  finish_time   DateTime? @db.Time(0)
+  app_user_id   Int?
+  employee_id   Int?
+  client_id     Int?
+  sub_client_id Int?
+  supplier_id   Int?
+  status        Int?      @db.TinyInt
+  sum_value     Int?
+  taxes         Int?
+  addition      Int?
+  discount      Int?
+  value         Int?
+  notes         String?   @db.VarChar(100)
+  fiscal        Int?
+}
+
+model movimentation_item {
+  id                Int       @id
+  movimentation_id  Int?
+  time              DateTime? @db.Time(0)
+  type              Int?      @db.TinyInt
+  entity_id         Int?
+  reference_id      Int?
+  reference_item_id Int?
+  amount            Int?
+  unit_value        Int?
+  value             Int?
+  notes             String?   @db.VarChar(100)
+}
+
+model neighborhood {
+  id      Int     @id
+  name    String? @db.VarChar(100)
+  city_id Int?
+  value   Int?
+  active  Int?    @db.TinyInt
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model next_id {
+  app_log_id             Int?
+  app_user_id            Int?
+  employee_id            Int?
+  neighborhood_id        Int?
+  client_id              Int?
+  client_credit_id       Int?
+  client_occurrence_id   Int?
+  hall_table_id          Int?
+  credit_card_id         Int?
+  supplier_id            Int?
+  expense_id             Int?
+  expense_category_id    Int?
+  material_id            Int?
+  material_item_id       Int?
+  category_id            Int?
+  product_id             Int?
+  product_item_id        Int?
+  stock_id               Int?
+  production_id          Int?
+  purchase_id            Int?
+  purchase_item_id       Int?
+  sale_id                Int?
+  sale_item_id           Int?
+  finance_id             Int?
+  production_planning_id Int?
+  bank_id                Int?
+  station_id             Int?
+  session_id             Int?
+  company_id             Int?
+  vehicle_id             Int?
+  cargo_id               Int?
+  cargo_item_id          Int?
+  manufacture_id         Int?
+  state_id               Int?
+  city_id                Int?
+  promotion_id           Int?
+  brand_id               Int?
+  revenue_id             Int?
+  department_id          Int?
+  warehouse_id           Int?
+  schedule_id            Int?
+  schedule_item_id       Int?
+  street_id              Int?
+  sub_client_id          Int?
+  service_id             Int?
+  service_item_id        Int?
+  equipment_id           Int?
+  equipment_item_id      Int?
+  message_id             Int?
+  movimentation_id       Int?
+  movimentation_item_id  Int?
+  client_reserve_id      Int?
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model nfe_map {
+  type              Int?
+  id                Int?
+  supplier          String? @db.VarChar(100)
+  element_key       String? @db.VarChar(100)
+  conversion_factor Float?  @db.Float
+
+  @@ignore
+}
+
+model product {
+  id               Int     @id
+  name             String? @db.VarChar(100)
+  description      String? @db.VarChar(500)
+  internal_code    String? @db.VarChar(20)
+  barcode          String? @db.VarChar(20)
+  department_id    Int?
+  type             Int?    @db.TinyInt
+  brand_id         Int?
+  category_id      Int?
+  measure_unit     String? @db.VarChar(10)
+  price            Int?
+  aux_price        Int?
+  minimum_price    Int?
+  maximum_price    Int?
+  web_sale_price   Int?
+  cost             Int?
+  markup           Int?
+  minimum_stock    Int?
+  current_stock    Int?
+  amount           Int?
+  print_production Int?    @db.TinyInt
+  production_group Int?
+  type2            Int?
+  web              Int?    @db.TinyInt
+  panel            Int?    @db.TinyInt
+  supplier_id      Int?
+  purchase_amount  Int?
+  tax1             Int?
+  tax2             Int?
+  tax3             Int?
+  tax4             Int?
+  tax5             Int?
+  tax6             Int?
+  tax1_code        String? @db.VarChar(20)
+  tax2_code        String? @db.VarChar(20)
+  tax3_code        String? @db.VarChar(20)
+  tax4_code        String? @db.VarChar(20)
+  tax5_code        String? @db.VarChar(20)
+  tax6_code        String? @db.VarChar(20)
+  ncm              String? @db.VarChar(20)
+  cfop             String? @db.VarChar(20)
+  parameters       String? @db.VarChar(100)
+  active           Int?    @db.TinyInt
+}
+
+model product_item {
+  id              Int     @id
+  product_id      Int?
+  type            Int?    @db.TinyInt
+  item_product_id Int?
+  material_id     Int?
+  manufacture_id  Int?
+  equipment_id    Int?
+  amount_time     Int?
+  unit            String? @db.VarChar(5)
+  waste_alocation Int?
+  notes           String? @db.VarChar(100)
+  include         Int?    @db.TinyInt
+}
+
+model production {
+  id           Int       @id
+  date         DateTime? @db.Date
+  time         DateTime? @db.Time(0)
+  product_id   Int?
+  amount       Int?
+  sale_id      Int?
+  sale_item_id Int?
+}
+
+model production_planning {
+  id           Int       @id
+  date         DateTime? @db.Date
+  time         DateTime? @db.Time(0)
+  product_id   Int?
+  amount       Int?
+  sale_id      Int?
+  sale_item_id Int?
+}
+
+model promotion {
+  id                       Int     @id
+  name                     String? @db.VarChar(100)
+  target                   Int?
+  product_id               Int?
+  service_id               Int?
+  type                     Int?
+  price                    Int?
+  price_percent            Int?
+  time_active              Int?    @db.TinyInt
+  init_time                String? @db.VarChar(5)
+  end_time                 String? @db.VarChar(5)
+  day_of_week_active       Int?    @db.TinyInt
+  init_day_of_week         Int?
+  end_day_of_week          Int?
+  day_of_month_active      Int?    @db.TinyInt
+  init_day_of_month        Int?
+  end_day_of_month         Int?
+  month_active             Int?    @db.TinyInt
+  init_month               Int?
+  end_month                Int?
+  company_active           Int?    @db.TinyInt
+  company_id               Int?
+  client_active            Int?    @db.TinyInt
+  client_id                Int?
+  neighborhood_active      Int?    @db.TinyInt
+  neighborhood_id          Int?
+  sub_client_type_active   Int?    @db.TinyInt
+  sub_client_type1         Int?
+  sub_client_type2         Int?
+  amount_active            Int?    @db.TinyInt
+  amount1                  Int?
+  amount2                  Int?
+  reference_product_active Int?    @db.TinyInt
+  reference_product_id     Int?
+  sale_type_active         Int?    @db.TinyInt
+  sale_type                Int?
+  active                   Int?    @db.TinyInt
+}
+
+model purchase {
+  id           Int       @id
+  type         Int?
+  opening_date DateTime? @db.Date
+  opening_time DateTime? @db.Time(0)
+  date         DateTime? @db.Date
+  time         DateTime? @db.Time(0)
+  stock_date   DateTime? @db.Date
+  stock_time   DateTime? @db.Time(0)
+  app_user_id  Int?
+  supplier_id  Int?
+  notes        String?   @db.VarChar(100)
+  sum_value    Int?
+  taxes        Int?
+  addition     Int?
+  discount     Int?
+  value        Int?
+  payed_value  Int?
+  aux1         Int?
+  payed        Int?      @db.TinyInt
+  stocked      Int?      @db.TinyInt
+  aux_stocked  Int?      @db.TinyInt
+  fiscal       String?   @db.VarChar(100)
+}
+
+model purchase_item {
+  id            Int     @id
+  purchase_id   Int?
+  type          Int?    @db.TinyInt
+  product_id    Int?
+  material_id   Int?
+  equipment_id  Int?
+  department_id Int?
+  unit_price    Int?
+  amount        Int?
+  value         Int?
+  notes         String? @db.VarChar(100)
+}
+
+model revenue {
+  id                  Int     @id
+  name                String? @db.VarChar(100)
+  expense_category_id Int?
+  active              Int?    @db.TinyInt
+}
+
+model sale {
+  id              Int       @id
+  opening_date    DateTime? @db.Date
+  opening_time    DateTime? @db.Time(0)
+  shipping_date   DateTime? @db.Date
+  shipping_time   DateTime? @db.Time(0)
+  departure_date  DateTime? @db.Date
+  departure_time  DateTime? @db.Time(0)
+  deliver_date    DateTime? @db.Date
+  deliver_time    DateTime? @db.Time(0)
+  payment_date    DateTime? @db.Date
+  payment_time    DateTime? @db.Time(0)
+  type            Int?      @db.TinyInt
+  app_user_id     Int?
+  hall_table_id   Int?
+  card_id         Int?
+  client_id       Int?
+  type2           Int?      @db.TinyInt
+  sub_client_id   Int?
+  delivery        Int?      @db.TinyInt
+  street_name     String?   @db.VarChar(1000)
+  neighborhood_id Int?
+  phone           String?   @db.VarChar(100)
+  employee_id     Int?
+  employee2_id    Int?
+  representative  String?   @db.VarChar(100)
+  company_id      Int?
+  notes           String?   @db.VarChar(1000)
+  sum_value       Int?
+  taxes           Int?
+  addition        Int?
+  discount        Int?
+  payed_value     Int?
+  web_sale_id     Int?
+  pendent_value   Int?
+  value           Int?
+  payment_method  String?   @db.VarChar(1000)
+  change_for      Int?
+  divisor         Int?
+  payed           Int?      @db.TinyInt
+  deliver_state   Int?      @db.TinyInt
+  pendent         Int?      @db.TinyInt
+  pendent_item    Int?      @db.TinyInt
+  schedule_id     Int?
+  cancelled       Int?      @db.TinyInt
+  fiscal          String?   @db.VarChar(100)
+  session_id      Int?
+  session_counter Int?
+  taxes_rule      Int?      @db.TinyInt
+  discount_rule   Int?      @db.TinyInt
+  web_sale_type   Int?
+  web_sale_codes  String?   @db.VarChar(100)
+  street_number   String?   @db.VarChar(100)
+  complement      String?   @db.VarChar(1000)
+  zipcode         String?   @db.VarChar(100)
+  coordinates     String?   @db.VarChar(100)
+}
+
+model sale_item {
+  id               Int       @id
+  sale_id          Int?
+  app_user_id      Int?
+  time             DateTime? @db.Time(0)
+  type             Int?      @db.TinyInt
+  product_id       Int?
+  material_id      Int?
+  manufacture_id   Int?
+  service_id       Int?
+  equipment_id     Int?
+  unit_price       Int?
+  amount           Int?
+  value            Int?
+  notes            String?   @db.VarChar(1000)
+  production_state Int?
+  production_batch Int?
+  pendent          Int?      @db.TinyInt
+  payed_amount     Int?
+  payed_value      Int?
+  father_item_id   Int?
+  cancelled        Int?      @db.TinyInt
+
+  @@index([sale_id], map: "ind1")
+  @@index([sale_id], map: "sale_id")
+}
+
+model schedule {
+  id              Int       @id
+  client_id       Int?
+  sub_client_id   Int?
+  employee_id     Int?
+  period_type     Int?
+  period_interval Int?
+  day_of_week     Int?
+  day_of_month    Int?
+  time            DateTime? @db.Time(0)
+  notes           String?   @db.VarChar(100)
+  init_date       DateTime? @db.Date
+  end_date        DateTime? @db.Date
+  payed           Int?      @db.TinyInt
+  payment_method  Int?
+  delivery        Int?      @db.TinyInt
+  active          Int?      @db.TinyInt
+}
+
+model schedule_item {
+  id          Int     @id
+  schedule_id Int?
+  type        Int?    @db.TinyInt
+  product_id  Int?
+  service_id  Int?
+  amount      Int?
+  notes       String? @db.VarChar(100)
+}
+
+model service {
+  id               Int     @id
+  name             String? @db.VarChar(100)
+  description      String? @db.VarChar(200)
+  internal_code    String? @db.VarChar(20)
+  barcode          String? @db.VarChar(20)
+  department_id    Int?
+  type             Int?    @db.TinyInt
+  brand_id         Int?
+  category_id      Int?
+  measure_unit     String? @db.VarChar(10)
+  price            Int?
+  aux_price        Int?
+  minimum_price    Int?
+  maximum_price    Int?
+  cost             Int?
+  markup           Int?
+  minimum_stock    Int?
+  current_stock    Int?
+  amount           Int?
+  production_print Int?    @db.TinyInt
+  printer_id       Int?
+  complement       Int?    @db.TinyInt
+  web              Int?    @db.TinyInt
+  selection_panel  Int?    @db.TinyInt
+  pcp_group        Int?
+  pcp_column       Int?
+  tax1             Int?
+  tax2             Int?
+  tax3             Int?
+  tax4             Int?
+  tax5             Int?
+  tax6             Int?
+  tax1_code        String? @db.VarChar(20)
+  tax2_code        String? @db.VarChar(20)
+  tax3_code        String? @db.VarChar(20)
+  tax4_code        String? @db.VarChar(20)
+  tax5_code        String? @db.VarChar(20)
+  tax6_code        String? @db.VarChar(20)
+  ncm              String? @db.VarChar(20)
+  cfop             String? @db.VarChar(20)
+  active           Int?    @db.TinyInt
+}
+
+model service_item {
+  id              Int     @id
+  service_id      Int?
+  type            Int?    @db.TinyInt
+  item_service_id Int?
+  material_id     Int?
+  manufacture_id  Int?
+  amount_time     Int?
+  unit            String? @db.VarChar(5)
+  waste_alocation Int?
+  notes           String? @db.VarChar(100)
+  include         Int?    @db.TinyInt
+}
+
+model session {
+  id                  Int       @id
+  init_date           DateTime? @db.Date
+  init_time           DateTime? @db.Time(0)
+  end_date            DateTime? @db.Date
+  end_time            DateTime? @db.Time(0)
+  station_id          Int?
+  app_user_id         Int?
+  period_type         Int?
+  cash_init           Int?
+  cash_final          Int?
+  credit_cards_final  String?   @db.VarChar(500)
+  check_final         Int?
+  ticket_final        Int?
+  term_final          Int?
+  finances_final      String?   @db.VarChar(500)
+  cash_init2          Int?
+  cash_final2         Int?
+  credit_cards_final2 String?   @db.VarChar(500)
+  check_final2        Int?
+  ticket_final2       Int?
+  term_final2         Int?
+  finances_final2     String?   @db.VarChar(500)
+  finished            Int?      @db.TinyInt
+  reviewed            Int?      @db.TinyInt
+}
+
+model state {
+  id       Int     @id
+  name     String? @db.VarChar(100)
+  aux_name String? @db.VarChar(2)
+  active   Int?    @db.TinyInt
+}
+
+model station {
+  id         Int     @id
+  name       String? @db.VarChar(100)
+  ip_address String? @db.VarChar(100)
+  printer_id Int?
+  registered Int?    @db.TinyInt
+  parameters String? @db.VarChar(100)
+  active     Int?    @db.TinyInt
+}
+
+model stock {
+  id               Int       @id
+  date             DateTime? @db.Date
+  time             DateTime? @db.Time(0)
+  type             Int?      @db.TinyInt
+  classification   Int?      @db.TinyInt
+  product_id       Int?
+  material_id      Int?
+  equipment_id     Int?
+  amount           Int?
+  estimation       Int?      @db.TinyInt
+  notes            String?   @db.VarChar(100)
+  sale_id          Int?
+  sale_item_id     Int?
+  purchase_id      Int?
+  purchase_item_id Int?
+  production_id    Int?
+
+  @@index([sale_item_id], map: "ind1")
+  @@index([sale_item_id], map: "sale_item_id")
+}
+
+model street {
+  id              Int     @id
+  name            String? @db.VarChar(100)
+  zipcode         String? @db.VarChar(10)
+  neighborhood_id Int?
+  active          Int?    @db.TinyInt
+}
+
+model sub_client {
+  id           Int       @id
+  name         String?   @db.VarChar(100)
+  client_id    Int?
+  gender       Int?      @db.TinyInt
+  birthday     DateTime? @db.Date
+  register     DateTime? @db.Date
+  active       Int?      @db.TinyInt
+  entity1_id   Int?
+  entity2_id   Int?
+  type1        Int?
+  type2        Int?
+  type3        Int?
+  type4        Int?
+  description1 String?   @db.VarChar(100)
+  description2 String?   @db.VarChar(100)
+  description3 String?   @db.VarChar(100)
+  description4 String?   @db.VarChar(100)
+  date1        DateTime? @db.Date
+  date2        DateTime? @db.Date
+  date3        DateTime? @db.Date
+  date4        DateTime? @db.Date
+  is1          Int?      @db.TinyInt
+  is2          Int?      @db.TinyInt
+  is3          Int?      @db.TinyInt
+  is4          Int?      @db.TinyInt
+  amount1      Int?
+  amount2      Int?
+  amount3      Int?
+  amount4      Int?
+}
+
+model supplier {
+  id              Int     @id
+  name            String? @db.VarChar(100)
+  aux_name        String? @db.VarChar(100)
+  phone           String? @db.VarChar(20)
+  cell_phone      String? @db.VarChar(20)
+  email           String? @db.VarChar(100)
+  state_id        Int?
+  city_id         Int?
+  street_name     String? @db.VarChar(100)
+  street_number   String? @db.VarChar(50)
+  zipcode         String? @db.VarChar(10)
+  neighborhood_id Int?
+  id_doc_number1  String? @db.VarChar(100)
+  id_doc_number2  String? @db.VarChar(100)
+  id_doc_number3  String? @db.VarChar(100)
+  notes           String? @db.VarChar(100)
+  active          Int?    @db.TinyInt
+}
+
+model vehicle {
+  id     Int     @id
+  name   String? @db.VarChar(100)
+  active Int?    @db.TinyInt
+}
+
+model warehouse {
+  id               Int       @id
+  date             DateTime? @db.Date
+  time             DateTime? @db.Time(0)
+  type             Int?      @db.TinyInt
+  material_id      Int?
+  amount           Int?
+  estimation       Int?      @db.TinyInt
+  purchase_id      Int?
+  purchase_item_id Int?
+}
